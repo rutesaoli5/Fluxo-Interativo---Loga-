@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="h-full bg-slate-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digitação de Tickets • Fluxo CIL</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        loga: {
+                            navy: '#0f2b5c',
+                            navydark: '#071836',
+                            blue: '#1C6E86',
+                            teal: '#3E8669',
+                            green: '#5C9A4F',
+                            lime: '#76AC39',
+                            brightlime: '#95C11F',
+                            graybg: '#f4f6f9'
+                        }
+                    },
+                    fontFamily: {
+                        poppins: ['Poppins', 'sans-serif'],
+                        lato: ['Lato', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { font-family: 'Lato', sans-serif; }
+        .font-poppins { font-family: 'Poppins', sans-serif; }
+        .step-card { transition: all 0.2s ease-in-out; }
+        .step-card:hover { transform: translateY(-2px); }
+        .step-card.active-step { border-color: #5C9A4F; box-shadow: 0 0 0 3px rgba(92, 154, 79, 0.3); }
+    </style>
+</head>
+<body class="h-full flex flex-col text-slate-800 antialiased bg-slate-100">
+
+    <header class="bg-loga-navy text-white shadow-md sticky top-0 z-30 border-b-2 border-loga-green">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="bg-white px-3 py-1.5 rounded-lg flex items-center shadow-inner">
+                    <img src="https://www.loga.com.br/wp-content/uploads/2022/11/Logo-Loga.png" alt="Logo LOGA" class="h-7 w-auto object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                    <span class="font-poppins font-extrabold text-xl text-loga-navy tracking-tight hidden">LOGA</span>
+                </div>
+                <div>
+                    <h1 class="font-poppins font-bold text-sm sm:text-base leading-tight">Digitação de Tickets • Fluxo CIL</h1>
+                    <p class="text-[11px] text-slate-300">Central de Inteligência e Logística • Validação de Telas</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-2 text-xs bg-loga-navydark px-3 py-1.5 rounded-lg border border-slate-700">
+                <i class="fa-solid fa-server text-loga-green"></i>
+                <span class="hidden sm:inline font-medium">Servidor Link: Ativo</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col gap-6">
+    
+        <!-- VISUAL FLOW STEPPER (6 STEPS) -->
+        <div class="grid grid-cols-2 md:grid-cols-6 gap-3">
+            
+            <div id="step-btn-1" onclick="selectStep(1)" class="step-card active-step cursor-pointer bg-white rounded-xl p-3 border-2 border-slate-200 shadow-sm flex flex-col justify-between">
+                <div class="flex items-center justify-between mb-1">
+                    <span class="w-5 h-5 rounded-full bg-loga-navy text-white text-[10px] font-bold flex items-center justify-center font-poppins">1</span>
+                    <i class="fa-solid fa-id-badge text-slate-400 text-xs"></i>
+                </div>
+                <h3 class="font-poppins font-bold text-xs text-loga-navy">Gerenciar Usuários</h3>
+                <p class="text-[10px] text-slate-500 mt-0.5">Sessão & Confirme</p>
+            </div>
+
+            <div id="step-btn-2" onclick="selectStep(2)" class="step-card cursor-pointer bg-white rounded-xl p-3 border-2 border-slate-200 shadow-sm flex flex-col justify-between">
+                <div class="flex items-center justify-between mb-1">
+                    <span class="w-5 h-5 rounded-full bg-loga-navy text-white text-[10px] font-bold flex items-center justify-center font-poppins">2</span>
+                    <i class="fa-solid fa-mobile-nodes text-slate-400 text-xs"></i>
+                </div>
+                <h3 class="font-poppins font-bold text-xs text-loga-navy">Seleção de App</h3>
+                <p class="text-[10px] text-slate-500 mt-0.5">Mapeamento Unidade</p>
+            </div>
+
+            <div id="step-btn-3" onclick="selectStep(3)" class="step-card cursor-pointer bg-white rounded-xl p-3 border-2 border-slate-200 shadow-sm flex flex-col justify-between">
+                <div class="flex items-center justify-between mb-1">
+                    <span class="w-5 h-5 rounded-full bg-loga-navy text-white text-[10px] font-bold flex items-center justify-center font-poppins">3</span>
+                    <i class="fa-solid fa-clock-lock text-slate-400 text-xs"></i>
+                </div>
+                <h3 class="font-poppins font-bold text-xs text-loga-navy">Datas & Horários</h3>
+                <p class="text-[10px] text-slate-500 mt-0.5">Emissão, Entrada, Saída</p>
+            </div>
+
+            <div id="step-btn-4" onclick="selectStep(4)" class="step-card cursor-pointer bg-white rounded-xl p-3 border-2 border-slate-200 shadow-sm flex flex-col justify-between">
+                <div class="flex items-center justify-between mb-1">
+                    <span class="w-5 h-5 rounded-full bg-loga-navy text-white text-[10px] font-bold flex items-center justify-center font-poppins">4</span>
+                    <i class="fa-solid fa-barcode text-slate-400 text-xs"></i>
+                </div>
+                <h3 class="font-poppins font-bold text-xs text-loga-navy">Nº Ticket Automatico</h3>
+                <p class="text-[10px] text-slate-500 mt-0.5">Cod Unidade + 5 Digitos</p>
+            </div>
+
+            <div id="step-btn-5" onclick="selectStep(5)" class="step-card cursor-pointer bg-white rounded-xl p-3 border-2 border-slate-200 shadow-sm flex flex-col justify-between">
+                <div class="flex items-center justify-between mb-1">
+                    <span class="w-5 h-5 rounded-full bg-loga-navy text-white text-[10px] font-bold flex items-center justify-center font-poppins">5</span>
+                    <i class="fa-solid fa-truck text-slate-400 text-xs"></i>
+                </div>
+                <h3 class="font-poppins font-bold text-xs text-loga-navy">Frota & Balança</h3>
+                <p class="text-[10px] text-slate-500 mt-0.5">Busca & Status</p>
+            </div>
+
+            <div id="step-btn-6" onclick="selectStep(6)" class="step-card cursor-pointer bg-white rounded-xl p-3 border-2 border-slate-200 shadow-sm flex flex-col justify-between">
+                <div class="flex items-center justify-between mb-1">
+                    <span class="w-5 h-5 rounded-full bg-loga-green text-loga-navy text-[10px] font-bold flex items-center justify-center font-poppins">6</span>
+                    <i class="fa-solid fa-server text-loga-navy text-xs"></i>
+                </div>
+                <h3 class="font-poppins font-bold text-xs text-loga-navy">Ticket Inserido</h3>
+                <p class="text-[10px] text-slate-500 mt-0.5">Consolidação CIL</p>
+            </div>
+        </div>
+
+        <!-- INTERACTIVE DETAIL PANEL -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 grid grid-cols-1 lg:grid-cols-12 gap-6">
+            
+            <!-- MOCKUP DISPLAY -->
+            <div class="lg:col-span-5 flex justify-center">
+                <div class="w-full max-w-[340px] bg-slate-900 rounded-[32px] p-3 shadow-xl border-4 border-slate-700">
+                    <div class="bg-white rounded-[24px] overflow-hidden flex flex-col min-h-[520px] border border-slate-200 relative">
+                        
+                        <!-- APP TOP BAR WITH LOGO -->
+                        <div class="bg-white border-b border-slate-200 px-3 py-2.5 flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <i class="fa-solid fa-bars text-slate-600 text-xs"></i>
+                                <div class="flex items-center space-x-1.5">
+                                    <span class="text-xs font-extrabold text-loga-navy">LOGA</span>
+                                    <span class="text-slate-300">|</span>
+                                    <span id="app-screen-title" class="text-xs font-bold text-slate-700 truncate max-w-[130px]">Mapeamento Unidade</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-2 text-slate-500 text-xs">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <i class="fa-solid fa-rotate-right"></i>
+                            </div>
+                        </div>
+
+                        <!-- MOCKUP CONTENT -->
+                        <div id="mockup-content" class="p-3 text-xs flex-grow space-y-3 bg-slate-100 relative overflow-y-auto max-h-[420px]">
+                            <!-- JS Inject -->
+                        </div>
+
+                        <!-- MOCKUP FOOTER -->
+                        <div id="mockup-footer" class="bg-white border-t border-slate-200 p-2.5 flex items-center justify-between">
+                            <button class="px-4 py-1 text-slate-600 font-semibold text-xs rounded hover:bg-slate-100">Cancel</button>
+                            <button id="mockup-save-btn" class="px-5 py-1 bg-slate-900 text-white font-bold text-xs rounded shadow hover:bg-black">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EXPLANATION -->
+            <div class="lg:col-span-7 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center space-x-2 mb-2">
+                        <span id="step-badge" class="bg-loga-navy text-white text-xs font-bold px-3 py-0.5 rounded-full font-poppins">Passo 2 de 6</span>
+                        <span id="selected-app-badge" class="bg-loga-green/20 text-loga-navy text-xs font-bold px-3 py-0.5 rounded-full font-poppins border border-loga-green/30">
+                            App 1 - Ponte Pequena
+                        </span>
+                    </div>
+
+                    <h3 id="step-title" class="font-poppins font-bold text-xl text-loga-navy mb-3">2. Ambiente e Aplicativo da Unidade</h3>
+                    <p id="step-description" class="text-sm text-slate-600 leading-relaxed mb-4">
+                        Mapeamento das 7 unidades organizadas nos 3 Apps principais. Clique em um card abaixo para alternar o app visualizado no simulador do celular.
+                    </p>
+
+                    <!-- APPS SELECTOR BUTTONS -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-4">
+                        <button onclick="selectApp(1)" id="app-btn-1" class="p-2.5 rounded-xl border-2 text-left transition font-poppins text-xs font-bold border-loga-navy bg-loga-navy text-white shadow-sm">
+                            <div class="text-[10px] uppercase opacity-80">App 1</div>
+                            Ponte Pequena
+                        </button>
+                        <button onclick="selectApp(2)" id="app-btn-2" class="p-2.5 rounded-xl border-2 text-left transition font-poppins text-xs font-bold border-slate-200 bg-white text-slate-700 hover:border-slate-300 shadow-sm">
+                            <div class="text-[10px] uppercase opacity-80">App 2</div>
+                            Caieiras
+                        </button>
+                        <button onclick="selectApp(3)" id="app-btn-3" class="p-2.5 rounded-xl border-2 text-left transition font-poppins text-xs font-bold border-slate-200 bg-white text-slate-700 hover:border-slate-300 shadow-sm">
+                            <div class="text-[10px] uppercase opacity-80">App 3</div>
+                            Bandeirantes
+                        </button>
+                    </div>
+
+                    <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 space-y-3">
+                        <h4 class="font-poppins font-bold text-xs uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                            <i class="fa-solid fa-circle-info text-loga-navy"></i>
+                            Regras e Comportamento na Tela
+                        </h4>
+                        <ul id="step-rules" class="text-xs text-slate-600 space-y-2">
+                            <!-- JS Inject -->
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between border-t border-slate-200 pt-4 mt-6">
+                    <button id="btn-prev" onclick="prevStep()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-lg transition flex items-center gap-2">
+                        <i class="fa-solid fa-chevron-left"></i> Anterior
+                    </button>
+                    <button id="btn-next" onclick="nextStep()" class="px-5 py-2 bg-loga-navy hover:bg-loga-navydark text-white font-bold text-xs rounded-lg transition flex items-center gap-2">
+                        Próximo Passo <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <script>
+        let currentStep = 1;
+        let currentApp = 1; 
+        let subViewStep1 = 'confirm';
+        let statusBalançaState = 'com_peso'; // 'com_peso' ou 'sem_peso'
+
+        const appData = {
+            1: {
+                name: "App 1 - Ponte Pequena",
+                color: "bg-loga-navy",
+                unitsText: "Abrangência: Contém: Ponte Pequena, Vila Albertina (13), Taboão (48) e Resíduos Terceiros.",
+                rules: [
+                    "App Selecionado: App 1 - Ponte Pequena.",
+                    "Escopo Operacional: Contém: Ponte Pequena, Vila Albertina (13), Taboão (48) e Resíduos Terceiros.",
+                    "Garante o direcionamento correto das informações no banco de dados."
+                ]
+            },
+            2: {
+                name: "App 2 - Caieiras",
+                color: "bg-loga-blue",
+                unitsText: "Abrangência: Contém: Caieiras (CTR Caieiras).",
+                rules: [
+                    "App Selecionado: App 2 - Caieiras.",
+                    "Escopo Operacional: Direcionado ao CTR Caieiras.",
+                    "Garante o direcionamento correto das informações no banco de dados."
+                ]
+            },
+            3: {
+                name: "App 3 - Bandeirantes",
+                color: "bg-loga-teal",
+                unitsText: "Abrangência: Contém: Bandeirantes (6) e ET.RSS Bandeirantes (17).",
+                rules: [
+                    "App Selecionado: App 3 - Bandeirantes.",
+                    "Escopo Operacional: Contém Bandeirantes (6) e ET.RSS Bandeirantes (17).",
+                    "Garante o direcionamento correto das informações no banco de dados."
+                ]
+            }
+        };
+
+        const residuosList = [
+            'DOMICILIAR',
+            'ESCORIA',
+            'TRANSBORDO',
+            'OPERAÇÃO CENTRO',
+            'PG SAÚDE',
+            'GG SAÚDE',
+            'SELETIVA',
+            'RESÍDUO TEXTIL',
+            'TRATAMENTO RSS',
+            'CHORUME',
+            'VIDRO',
+            'REJEITO SELETIVA COOPERATIVAS',
+            'REJEITO',
+            'RESÍDUOS SÓLIDOS URBANOS',
+        ];
+
+        const empresasList = [
+            'LOGÍSTICA AMBIENTAL DE SÃO PAULO S/A. - LOGA'
+        ];
+
+        const operadoresList = [
+            { matricula: '3908263', nome: 'Rute' },
+            { matricula: '3901024', nome: 'Victor' },
+            { matricula: '3904512', nome: 'Felipe' }
+        ];
+
+        let selectedOperador = operadoresList[0].matricula;
+
+        function selectApp(appId) {
+            currentApp = appId;
+            for (let i = 1; i <= 3; i++) {
+                const btn = document.getElementById(`app-btn-${i}`);
+                if (i === appId) {
+                    btn.className = "p-2.5 rounded-xl border-2 text-left transition font-poppins text-xs font-bold border-loga-navy bg-loga-navy text-white shadow-sm";
+                } else {
+                    btn.className = "p-2.5 rounded-xl border-2 text-left transition font-poppins text-xs font-bold border-slate-200 bg-white text-slate-700 hover:border-slate-300 shadow-sm";
+                }
+            }
+            selectStep(2);
+        }
+
+        function nextStep() {
+            if (currentStep < 6) selectStep(currentStep + 1);
+        }
+
+        function prevStep() {
+            if (currentStep > 1) selectStep(currentStep - 1);
+        }
+
+        function selectStep(stepNum) {
+            currentStep = stepNum;
+
+            for (let i = 1; i <= 6; i++) {
+                const btn = document.getElementById(`step-btn-${i}`);
+                if (btn) btn.classList.toggle('active-step', i === stepNum);
+            }
+
+            let mockupHtml = '';
+            let rules = [];
+            let title = '';
+            let desc = '';
+            let screenHeaderTitle = '';
+            let appBadgeText = appData[currentApp].name;
+
+            document.getElementById('step-badge').innerText = `Passo ${stepNum} de 6`;
+            document.getElementById('selected-app-badge').innerText = appBadgeText;
+
+            if (stepNum === 1) {
+                screenHeaderTitle = "Gerenciar Usuários";
+                title = "1. Gerenciar Usuários & Confirmação de Login";
+                desc = "Fluxo de login, confirmação de sessão e abertura do formulário de novos dispositivos com seleção por lista.";
+                rules = [
+                    "<b>Caixa de Confirmação (Confirm):</b> Alerta interativo para autorizar o acesso do colaborador <span class='text-red-600 font-bold'>(exemplo)</span>.",
+                    "<b>Botão LOGIN:</b> Redireciona diretamente para o formulário de Nova Sessão.",
+                    "<b>Operador ativo:</b> Lista suspensa com matrículas cadastradas <span class='text-red-600 font-bold'>(exemplo)</span>."
+                ];
+
+                if (subViewStep1 === 'confirm') {
+                    mockupHtml = `
+                        <div class="space-y-3 opacity-40 pointer-events-none">
+                            <div class="bg-white p-3 rounded-lg border border-slate-300 shadow-sm">
+                                <div class="font-bold text-sm text-slate-800">Rute</div>
+                                <div class="text-xs text-slate-500 font-mono">3908263</div>
+                            </div>
+                        </div>
+                        <div class="absolute inset-0 bg-slate-900/50 flex items-center justify-center p-3 z-10">
+                            <div class="bg-white rounded-lg p-4 shadow-xl w-full max-w-[250px] text-left space-y-3">
+                                <div class="font-poppins font-bold text-slate-800 text-sm">Confirm <span class="text-red-600 font-normal">(exemplo)</span></div>
+                                <p class="text-xs text-slate-600">Acessar com este usuário?</p>
+                                <div class="flex justify-end space-x-3 pt-2 font-bold text-xs">
+                                    <button onclick="subViewStep1='confirm'; selectStep(1);" class="text-slate-500 hover:text-slate-800 px-2 py-1">NO</button>
+                                    <button onclick="subViewStep1='form'; selectStep(1);" class="text-slate-900 border-2 border-loga-green px-3 py-1 rounded font-extrabold hover:bg-loga-green/20 transition">LOGIN</button>
+                                </div>
+                            </div>
+                        </div>`;
+                } else {
+                    const currentOpObj = operadoresList.find(o => o.matricula === selectedOperador) || operadoresList[0];
+                    mockupHtml = `
+                        <div class="bg-white p-3 rounded-lg border border-slate-200 shadow-sm space-y-3">
+                            <div class="font-bold text-xs text-slate-700 border-b pb-1">Dispositivos Form <span class="text-red-600 font-normal">(exemplo)</span></div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-600 mb-1">Operador ativo <span class="text-red-600">(exemplo)</span></label>
+                                <select onchange="selectedOperador=this.value; selectStep(1);" class="w-full p-2 border-2 border-loga-green rounded bg-white text-xs font-bold font-mono text-slate-800 shadow-sm focus:outline-none">
+                                    ${operadoresList.map(op => `<option value="${op.matricula}" ${op.matricula === selectedOperador ? 'selected' : ''}>${op.matricula} - ${op.nome}</option>`).join('')}
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-600 mb-1">Nome</label>
+                                <input type="text" value="${currentOpObj.nome}" readonly class="w-full p-2 border border-slate-200 bg-slate-50 rounded text-xs font-semibold text-slate-500">
+                            </div>
+                            <button onclick="subViewStep1='confirm'; selectStep(1);" class="w-full py-1.5 bg-slate-200 text-slate-700 font-bold text-[10px] rounded hover:bg-slate-300 transition mt-2">
+                                <i class="fa-solid fa-rotate-left mr-1"></i> Voltar para Confirmação
+                            </button>
+                        </div>`;
+                }
+
+            } else if (stepNum === 2) {
+                screenHeaderTitle = "Mapeamento Unidade";
+                title = "2. Ambiente e Aplicativo da Unidade";
+                desc = "Mapeamento das unidades organizadas nos Apps principais com seleção de empresas e tipos de resíduos.";
+                rules = [
+                    `App Selecionado: ${appData[currentApp].name}.`,
+                    "Campo Empresas: Seleção conforme empresas descarregadas em determinada unidade  ='text-red-600 font-bold'>(exemplo)</span>.",
+                    "Tipo de Resíduos: Listagem completa oficial integrada, Entretanto no seu aplicativo ficarão restritas os tipos de residuos de cada unidade de origem do app (Domiciliar, Escória, Transbordo, etc.) <span class='text-red-600 font-bold'>(exemplo)</span>."
+                ];
+
+                mockupHtml = `
+                    <div class="space-y-3">
+                        <div class="bg-white rounded-lg border border-slate-300 shadow-sm overflow-hidden">
+                            <div class="${appData[currentApp].color} text-white p-2.5 font-bold text-xs">
+                                ${appData[currentApp].name.toUpperCase()} <span class="text-red-500 font-normal">(exemplo)</span>
+                            </div>
+                            <div class="p-2.5 text-[11px] text-slate-600 bg-slate-50">
+                                ${appData[currentApp].unitsText}
+                            </div>
+                        </div>
+
+                        <!-- EMPRESAS -->
+                        <div class="bg-white p-2.5 rounded-lg border border-slate-200 shadow-sm space-y-1.5">
+                            <label class="block text-[10px] font-bold text-loga-navy flex items-center gap-1">
+                                <i class="fa-solid fa-building text-loga-blue"></i> Empresas* <span class="text-red-600 font-normal">(exemplo)</span>
+                            </label>
+                            <select class="w-full p-1.5 border border-slate-300 rounded text-xs font-semibold text-slate-700 bg-white focus:outline-none focus:border-loga-green">
+                                ${empresasList.map(e => `<option>${e}</option>`).join('')}
+                            </select>
+                        </div>
+
+                        <!-- TIPO DE RESÍDUOS -->
+                        <div class="bg-white p-2.5 rounded-lg border border-slate-200 shadow-sm space-y-1.5">
+                            <label class="block text-[10px] font-bold text-loga-navy flex items-center gap-1">
+                                <i class="fa-solid fa-recycle text-loga-green"></i> Tipo de Resíduos* <span class="text-red-600 font-normal">(exemplo)</span>
+                            </label>
+                            <select class="w-full p-1.5 border border-slate-300 rounded text-xs font-semibold text-slate-700 bg-white focus:outline-none focus:border-loga-green">
+                                ${residuosList.map(r => `<option>${r}</option>`).join('')}
+                            </select>
+                        </div>
+                    </div>`;
+
+            } else if (stepNum === 3) {
+                screenHeaderTitle = "Controle de Datas";
+                title = "3. Controle de Datas (Emissão, Entrada e Saída)";
+                desc = "Formulário com preenchimento de Data de Emissão, Data Oficial, Data Entrada e Data Saída separadas.";
+                rules = [
+                    "Data Emissão*: Gerada automaticamente pelo sistema <span class='text-red-600 font-bold'>(exemplo)</span>.",
+                    "Data Oficial*: Registra a data de competência da Pesagem.",
+                    "Data Entrada* e Data Saída*: Data e horários de permanência na balança, sendo assim Data de Entrada e Saida respectivamente <span class='text-red-600 font-bold'>(exemplo)</span>."
+                ];
+                mockupHtml = `
+                    <div class="space-y-2 text-[11px]">
+                        <div>
+                            <label class="block font-bold text-slate-700">Data emissão* <span class="text-red-600 font-normal">(exemplo)</span></label>
+                            <div class="p-1.5 bg-slate-100 border border-loga-green rounded font-mono text-xs text-slate-500 font-bold">17/08/2026 15:53:08</div>
+                        </div>
+                        <div>
+                            <label class="block font-bold text-slate-700">Data Oficial*</label>
+                            <div class="p-1.5 bg-white border rounded font-mono text-xs text-slate-700">17/08/2026</div>
+                        </div>
+                        <div>
+                            <label class="block font-bold text-slate-700">Data Entrada* <span class="text-red-600 font-normal">(exemplo)</span></label>
+                            <div class="p-1.5 bg-white border rounded font-mono text-xs text-slate-700 flex justify-between items-center">
+                                <span>17/08/2026 15:53</span>
+                                <i class="fa-solid fa-clock text-slate-400"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block font-bold text-slate-700">Data Saída* <span class="text-red-600 font-normal">(exemplo)</span></label>
+                            <div class="p-1.5 bg-white border rounded font-mono text-xs text-slate-700 flex justify-between items-center">
+                                <span>17/08/2026 15:55</span>
+                                <i class="fa-solid fa-clock text-slate-400"></i>
+                            </div>
+                        </div>
+                    </div>`;
+
+            } else if (stepNum === 4) {
+                screenHeaderTitle = "Numeração de Ticket";
+                title = "4. Geração Automática do Ticket";
+                desc = "Composição automática do código da unidade selecionada.";
+                rules = [
+                    "Nº Ticket: Numeração formatada gerada automaticamente pelo sistema com base na unidade oficial de codigo pela SP REGULA <span class='text-red-600 font-bold'>(exemplo)</span>."
+                ];
+                mockupHtml = `
+                    <div class="space-y-3 text-center py-6">
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Nº Ticket Gerado <span class="text-red-600 text-[10px] font-normal">(exemplo)</span></label>
+                        <div class="p-3 bg-slate-50 border-2 border-loga-green rounded font-mono font-extrabold text-base text-loga-navy">
+                            300142
+                        </div>
+                        <p class="text-[10px] text-slate-500">${appData[currentApp].name}</p>
+                    </div>`;
+
+            } else if (stepNum === 5) {
+                screenHeaderTitle = "Frota & Balança";
+                title = "5. Frota e Busca de Veículos";
+                desc = "Seleção de veículos com campo de busca integrado e painel dinâmico de balança (Bruto, Tara, Líquido).";
+                rules = [
+                    "Status Balança: Alternância entre COM PESO e SEM PESO <span class='text-red-600 font-bold'>(exemplo)</span>.",
+                    "Campos de Pesagem AppSheet: Ao selecionar COM PESO, abrem-se os campos Bruto, Tara e Líquido que DEVEM ser preenchidos conforme peso da balança ESTABILIZADA<span class='text-red-600 font-bold'>(exemplo)</span>.",
+                    "Veículo*: Modelo de pesquisa de placas, atrelados ao residuo e empresa para mitigação de erros.<span class='text-red-600 font-bold'>(exemplo)</span>."
+                ];
+                
+                let pesoFieldsHtml = '';
+                if (statusBalançaState === 'com_peso') {
+                    pesoFieldsHtml = `
+                        <div class="space-y-2 pt-1 border-t border-slate-200 animate-fadeIn">
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-700">Bruto <span class="text-red-600 font-normal">(exemplo)</span></label>
+                                <input type="text" value="24500" class="w-full p-1.5 border border-slate-300 rounded text-xs font-mono font-bold bg-white focus:outline-none focus:border-loga-green">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-700">Tara <span class="text-red-600 font-normal">(exemplo)</span></label>
+                                <input type="text" value="12300" class="w-full p-1.5 border border-slate-300 rounded text-xs font-mono font-bold bg-white focus:outline-none focus:border-loga-green">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-700">Líquido <span class="text-red-600 font-normal">(exemplo)</span></label>
+                                <input type="text" value="12200" readonly class="w-full p-1.5 border border-slate-200 rounded text-xs font-mono font-bold bg-slate-100 text-slate-600">
+                            </div>
+                        </div>
+                    `;
+                }
+
+                mockupHtml = `
+                    <div class="space-y-2.5">
+                        <label class="block text-[10px] font-bold text-slate-700">Status Balança <span class="text-red-600 font-normal">(exemplo)</span></label>
+                        <div class="grid grid-cols-2 gap-1.5">
+                            <button onclick="statusBalançaState='com_peso'; selectStep(5);" class="py-1.5 border-b-2 font-bold text-[10px] transition ${statusBalançaState === 'com_peso' ? 'bg-slate-900 text-white border-loga-green shadow' : 'bg-slate-50 text-slate-500 border-transparent'}">COM PESO</button>
+                            <button onclick="statusBalançaState='sem_peso'; selectStep(5);" class="py-1.5 border-b-2 font-bold text-[10px] transition ${statusBalançaState === 'sem_peso' ? 'bg-slate-900 text-white border-loga-green shadow' : 'bg-slate-50 text-slate-500 border-transparent'}">SEM PESO</button>
+                        </div>
+
+                        ${pesoFieldsHtml}
+
+                        <div class="bg-white p-2.5 rounded border border-slate-300 space-y-2">
+                            <label class="block text-[10px] font-bold text-slate-700">Veículo*</label>
+                            <div class="relative">
+                                <input type="text" placeholder="Search" class="w-full pl-7 pr-2 py-1 text-xs border rounded focus:outline-none focus:border-loga-green">
+                                <i class="fa-solid fa-magnifying-glass text-slate-400 text-xs absolute left-2 top-2"></i>
+                            </div>
+                            <div class="space-y-1 font-mono text-xs">
+                                <div class="p-1 bg-loga-green/20 rounded font-bold text-loga-navy">AZU0D90</div>
+                                <div class="p-1 hover:bg-slate-50 rounded">BHP5H20</div>
+                                <div class="p-1 hover:bg-slate-50 rounded">BIQ9J87</div>
+                            </div>
+                        </div>
+                    </div>`;
+
+            } else if (stepNum === 6) {
+                screenHeaderTitle = "Consolidação CIL";
+                title = "6. Ticket Inserido (Consolidação CIL)";
+                desc = "Envio do registro completo com os dados selecionados para validação.";
+                rules = [
+                    `App / Unidade: ${appData[currentApp].name}`,
+                    "Status: Sincronizado com o servidor CIL da LOGA <span class='text-red-600 font-bold'>(exemplo)</span>."
+                ];
+                mockupHtml = `
+                    <div class="text-center py-6 space-y-2">
+                        <i class="fa-solid fa-cloud-arrow-up text-3xl text-loga-green"></i>
+                        <div class="font-bold text-xs text-loga-navy">Ticket Enviado com Sucesso! <span class="text-red-600 font-normal">(exemplo)</span></div>
+                        <p class="text-[10px] text-slate-500 px-4">${appData[currentApp].name}</p>
+                    </div>`;
+            }
+
+            document.getElementById('app-screen-title').innerText = screenHeaderTitle;
+            document.getElementById('mockup-content').innerHTML = mockupHtml;
+            document.getElementById('step-title').innerText = title;
+            document.getElementById('step-description').innerText = desc;
+
+            const rulesListEl = document.getElementById('step-rules');
+            rulesListEl.innerHTML = rules.map(rule => `<li class="flex items-start gap-2"><i class="fa-solid fa-check text-loga-green mt-0.5"></i><span>${rule}</span></li>`).join('');
+
+            document.getElementById('btn-prev').style.display = (stepNum === 1) ? 'none' : 'flex';
+            document.getElementById('btn-next').innerText = (stepNum === 6) ? 'Concluído' : 'Próximo Passo';
+        }
+    </script>
+</body>
+</html>
