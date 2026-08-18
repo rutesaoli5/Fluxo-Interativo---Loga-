@@ -148,12 +148,10 @@
                             </div>
                         </div>
 
-                        
                         <div id="mockup-content" class="p-3 text-xs flex-grow space-y-3 bg-slate-100 relative overflow-y-auto max-h-[420px]">
                             
                         </div>
 
-                        
                         <div id="mockup-footer" class="bg-white border-t border-slate-200 p-2.5 flex items-center justify-between">
                             <button class="px-4 py-1 text-slate-600 font-semibold text-xs rounded hover:bg-slate-100">Cancel</button>
                             <button id="mockup-save-btn" class="px-5 py-1 bg-slate-900 text-white font-bold text-xs rounded shadow hover:bg-black">Save</button>
@@ -381,8 +379,8 @@
                 desc = "Mapeamento das unidades organizadas nos Apps principais com seleção de empresas e tipos de resíduos.";
                 rules = [
                     `App Selecionado: ${appData[currentApp].name}.`,
-                    "Campo Empresas: Seleção conforme empresas descarregadas em determinada unidade.
-                    "Tipo de Resíduos: Listagem completa oficial integrada, Entretanto no seu aplicativo ficarão restritas os tipos de residuos de cada unidade de origem do app (Domiciliar, Escória, Transbordo, etc.) <span class='text-red-600 font-bold'>(exemplo)</span>."
+                    "Campo Empresas: Seleção conforme empresas descarregadas em determinada unidade.",
+                    "Tipo de Resíduos: Listagem completa oficial integrada, restrita aos tipos de resíduos de cada unidade de origem do app <span class='text-red-600 font-bold'>(exemplo)</span>."
                 ];
 
                 mockupHtml = `
@@ -424,7 +422,7 @@
                 rules = [
                     "Data Emissão*: Gerada automaticamente pelo sistema <span class='text-red-600 font-bold'>(exemplo)</span>.",
                     "Data Oficial*: Registra a data de competência da Pesagem.",
-                    "Data Entrada* e Data Saída*: Data e horários de permanência na balança, sendo assim Data de Entrada e Saida respectivamente <span class='text-red-600 font-bold'>(exemplo)</span>."
+                    "Data Entrada* e Data Saída*: Data e horários de permanência na balança <span class='text-red-600 font-bold'>(exemplo)</span>."
                 ];
                 mockupHtml = `
                     <div class="space-y-2 text-[11px]">
@@ -457,7 +455,7 @@
                 title = "4. Geração Automática do Ticket";
                 desc = "Composição automática do código da unidade selecionada.";
                 rules = [
-                    "Nº Ticket: Numeração formatada gerada automaticamente pelo sistema com base na unidade oficial de codigo pela SP REGULA <span class='text-red-600 font-bold'>(exemplo)</span>."
+                    "Nº Ticket: Numeração formatada gerada automaticamente pelo sistema com base na unidade oficial de código pela SP REGULA <span class='text-red-600 font-bold'>(exemplo)</span>."
                 ];
                 mockupHtml = `
                     <div class="space-y-3 text-center py-6">
@@ -473,82 +471,60 @@
                 title = "5. Frota e Busca de Veículos";
                 desc = "Seleção de veículos com campo de busca integrado e painel dinâmico de balança (Bruto, Tara, Líquido).";
                 rules = [
-                    "Status Balança: Alternância entre COM PESO e SEM PESO <span class='text-red-600 font-bold'>(exemplo)</span>.",
-                    "Campos de Pesagem AppSheet: Ao selecionar COM PESO, abrem-se os campos Bruto, Tara e Líquido que DEVEM ser preenchidos conforme peso da balança ESTABILIZADA<span class='text-red-600 font-bold'>(exemplo)</span>.",
-                    "Veículo*: Modelo de pesquisa de placas, atrelados ao residuo e empresa para mitigação de erros.<span class='text-red-600 font-bold'>(exemplo)</span>."
+                    "Busca de Placa/Frota: Filtra em tempo real os veículos associados à operação.",
+                    "Pesagem: Integração com balança rodoviária para cálculo do peso líquido <span class='text-red-600 font-bold'>(exemplo)</span>."
                 ];
-                
-                let pesoFieldsHtml = '';
-                if (statusBalançaState === 'com_peso') {
-                    pesoFieldsHtml = `
-                        <div class="space-y-2 pt-1 border-t border-slate-200 animate-fadeIn">
-                            <div>
-                                <label class="block text-[10px] font-bold text-slate-700">Bruto <span class="text-red-600 font-normal">(exemplo)</span></label>
-                                <input type="text" value="24500" class="w-full p-1.5 border border-slate-300 rounded text-xs font-mono font-bold bg-white focus:outline-none focus:border-loga-green">
-                            </div>
-                            <div>
-                                <label class="block text-[10px] font-bold text-slate-700">Tara <span class="text-red-600 font-normal">(exemplo)</span></label>
-                                <input type="text" value="12300" class="w-full p-1.5 border border-slate-300 rounded text-xs font-mono font-bold bg-white focus:outline-none focus:border-loga-green">
-                            </div>
-                            <div>
-                                <label class="block text-[10px] font-bold text-slate-700">Líquido <span class="text-red-600 font-normal">(exemplo)</span></label>
-                                <input type="text" value="12200" readonly class="w-full p-1.5 border border-slate-200 rounded text-xs font-mono font-bold bg-slate-100 text-slate-600">
-                            </div>
-                        </div>
-                    `;
-                }
-
                 mockupHtml = `
-                    <div class="space-y-2.5">
-                        <label class="block text-[10px] font-bold text-slate-700">Status Balança <span class="text-red-600 font-normal">(exemplo)</span></label>
-                        <div class="grid grid-cols-2 gap-1.5">
-                            <button onclick="statusBalançaState='com_peso'; selectStep(5);" class="py-1.5 border-b-2 font-bold text-[10px] transition ${statusBalançaState === 'com_peso' ? 'bg-slate-900 text-white border-loga-green shadow' : 'bg-slate-50 text-slate-500 border-transparent'}">COM PESO</button>
-                            <button onclick="statusBalançaState='sem_peso'; selectStep(5);" class="py-1.5 border-b-2 font-bold text-[10px] transition ${statusBalançaState === 'sem_peso' ? 'bg-slate-900 text-white border-loga-green shadow' : 'bg-slate-50 text-slate-500 border-transparent'}">SEM PESO</button>
+                    <div class="space-y-2 text-[11px]">
+                        <div>
+                            <label class="block font-bold text-slate-700">Placa / Frota* <span class="text-red-600 font-normal">(exemplo)</span></label>
+                            <input type="text" value="ABC-1234" class="w-full p-1.5 border rounded text-xs font-mono font-bold bg-white text-slate-800">
                         </div>
-
-                        ${pesoFieldsHtml}
-
-                        <div class="bg-white p-2.5 rounded border border-slate-300 space-y-2">
-                            <label class="block text-[10px] font-bold text-slate-700">Veículo*</label>
-                            <div class="relative">
-                                <input type="text" placeholder="Search" class="w-full pl-7 pr-2 py-1 text-xs border rounded focus:outline-none focus:border-loga-green">
-                                <i class="fa-solid fa-magnifying-glass text-slate-400 text-xs absolute left-2 top-2"></i>
+                        <div class="grid grid-cols-3 gap-1 pt-1">
+                            <div class="bg-slate-50 p-1.5 rounded border text-center">
+                                <span class="block text-[9px] text-slate-500 font-bold">BRUTO</span>
+                                <span class="font-mono font-bold text-xs text-slate-800">18.500 kg</span>
                             </div>
-                            <div class="space-y-1 font-mono text-xs">
-                                <div class="p-1 bg-loga-green/20 rounded font-bold text-loga-navy">AZU0D90</div>
-                                <div class="p-1 hover:bg-slate-50 rounded">BHP5H20</div>
-                                <div class="p-1 hover:bg-slate-50 rounded">BIQ9J87</div>
+                            <div class="bg-slate-50 p-1.5 rounded border text-center">
+                                <span class="block text-[9px] text-slate-500 font-bold">TARA</span>
+                                <span class="font-mono font-bold text-xs text-slate-800">8.200 kg</span>
+                            </div>
+                            <div class="bg-loga-green/10 p-1.5 rounded border border-loga-green text-center">
+                                <span class="block text-[9px] text-loga-navy font-bold">LÍQUIDO</span>
+                                <span class="font-mono font-extrabold text-xs text-loga-navy">10.300 kg</span>
                             </div>
                         </div>
                     </div>`;
 
             } else if (stepNum === 6) {
-                screenHeaderTitle = "Consolidação CIL";
-                title = "6. Ticket Inserido (Consolidação CIL)";
-                desc = "Envio do registro completo com os dados selecionados para validação.";
+                screenHeaderTitle = "Ticket Inserido";
+                title = "6. Consolidação e Inserção CIL";
+                desc = "Revisão final de todos os campos e consolidação do ticket no fluxo da Central de Inteligência e Logística.";
                 rules = [
-                    `App / Unidade: ${appData[currentApp].name}`,
-                    "Status: Sincronizado com o servidor CIL da LOGA <span class='text-red-600 font-bold'>(exemplo)</span>."
+                    "Validação de Campos: Conferência automática antes do envio definitivo.",
+                    "Consolidação CIL: Registro salvo com sucesso no banco de dados e disponível para relatórios <span class='text-red-600 font-bold'>(exemplo)</span>."
                 ];
                 mockupHtml = `
-                    <div class="text-center py-6 space-y-2">
-                        <i class="fa-solid fa-cloud-arrow-up text-3xl text-loga-green"></i>
-                        <div class="font-bold text-xs text-loga-navy">Ticket Enviado com Sucesso! <span class="text-red-600 font-normal">(exemplo)</span></div>
-                        <p class="text-[10px] text-slate-500 px-4">${appData[currentApp].name}</p>
+                    <div class="space-y-3 text-center py-4">
+                        <div class="w-12 h-12 bg-loga-green/20 text-loga-green rounded-full flex items-center justify-center mx-auto text-xl border-2 border-loga-green">
+                            <i class="fa-solid fa-check"></i>
+                        </div>
+                        <div class="font-poppins font-bold text-sm text-slate-800">Ticket Inserido com Sucesso!</div>
+                        <p class="text-[10px] text-slate-500">Os dados foram consolidados no sistema CIL e integrados à base de controle.</p>
                     </div>`;
             }
 
             document.getElementById('app-screen-title').innerText = screenHeaderTitle;
-            document.getElementById('mockup-content').innerHTML = mockupHtml;
             document.getElementById('step-title').innerText = title;
             document.getElementById('step-description').innerText = desc;
+            document.getElementById('mockup-content').innerHTML = mockupHtml;
 
             const rulesListEl = document.getElementById('step-rules');
-            rulesListEl.innerHTML = rules.map(rule => `<li class="flex items-start gap-2"><i class="fa-solid fa-check text-loga-green mt-0.5"></i><span>${rule}</span></li>`).join('');
-
-            document.getElementById('btn-prev').style.display = (stepNum === 1) ? 'none' : 'flex';
-            document.getElementById('btn-next').innerText = (stepNum === 6) ? 'Concluído' : 'Próximo Passo';
+            rulesListEl.innerHTML = rules.map(r => `<li class="flex items-start gap-1.5"><i class="fa-solid fa-check text-loga-green mt-0.5"></i><span>${r}</span></li>`).join('');
         }
+
+        // Inicializa o primeiro passo
+        selectStep(1);
     </script>
 </body>
 </html>
